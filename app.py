@@ -270,8 +270,8 @@ def add_fill_colors(gdf, layer_key):
 # MAP BUILDER
 def build_map(gdf_filtered, layer_key, selected_ward=None):
     """Build a Folium map – color embedded directly in each GeoJSON feature."""
-    center_lat = gdf_filtered.geometry.to_crs(epsg=32643).centroid.to_crs(epsg=4326).y.mean()
-    center_lng = gdf_filtered.geometry.to_crs(epsg=32643).centroid.to_crs(epsg=4326).x.mean()
+    center_lat = gdf_filtered.geometry.centroid.y.mean()
+    center_lng = gdf_filtered.geometry.centroid.x.mean()
 
     m = folium.Map(
         location=[center_lat, center_lng],
@@ -593,19 +593,17 @@ with panel_col:
             "LST_mean": "LST°C", "NDBI_mean": "NDBI",
             "Cluster_Label": "Category"
         })
-    st.dataframe(
-        top15,
-        use_container_width=True,
-        height=430,
-        column_config={
-            "Score": st.column_config.ProgressColumn(
-                "Score",
-                min_value=0,
-                max_value=100,
-                format="%d",
-            ),
-        }
-    )
+
+        def color_score(val):
+            if val >= 66: return "background-color: #fed7d7"
+            elif val >= 33: return "background-color: #feebc8"
+            return "background-color: #c6f6d5"
+
+        st.dataframe(
+            top15.style.applymap(color_score, subset=["Score"]),
+            use_container_width=True,
+            height=430,
+        )
 
     with tab3:
         st.markdown("##### All Visible Wards")
