@@ -270,8 +270,8 @@ def add_fill_colors(gdf, layer_key):
 # MAP BUILDER
 def build_map(gdf_filtered, layer_key, selected_ward=None):
     """Build a Folium map – color embedded directly in each GeoJSON feature."""
-    center_lat = gdf_filtered.geometry.centroid.y.mean()
-    center_lng = gdf_filtered.geometry.centroid.x.mean()
+    center_lat = gdf_filtered.geometry.to_crs(epsg=32643).centroid.to_crs(epsg=4326).y.mean()
+    center_lng = gdf_filtered.geometry.to_crs(epsg=32643).centroid.to_crs(epsg=4326).x.mean()
 
     m = folium.Map(
         location=[center_lat, center_lng],
