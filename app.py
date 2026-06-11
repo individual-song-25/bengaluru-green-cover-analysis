@@ -594,15 +594,18 @@ with panel_col:
             "Cluster_Label": "Category"
         })
 
-        def color_score(val):
-            if val >= 66: return "background-color: #fed7d7"
-            elif val >= 33: return "background-color: #feebc8"
-            return "background-color: #c6f6d5"
-
-        st.dataframe(
-            top15.style.applymap(color_score, subset=["Score"]),
+    st.dataframe(
+            top15,
             use_container_width=True,
             height=430,
+            column_config={
+                "Score": st.column_config.ProgressColumn(
+                    "Score",
+                    min_value=0,
+                    max_value=100,
+                    format="%d",
+                ),
+            }
         )
 
     with tab3:
