@@ -32,7 +32,7 @@ Spectral indices were exported from GEE as zonal mean statistics per ward polygo
 ```
 project-folder/
 │
-├── heat_app.py                           # Main Streamlit application
+├── app.py                           # Main Streamlit application
 ├── bangalore_heat_project_model.ipynb    # GEE analysis notebook (data pipeline)
 ├── bangalore_priority_zones.geojson      # BBMP ward boundaries + computed features
 │
@@ -92,11 +92,11 @@ You will need a Google account with GEE access. Run `ee.Authenticate()` in the s
 pip install streamlit folium streamlit-folium geopandas scikit-learn pandas numpy
 ```
 
-3. Make sure all required files are in the same folder as `heat_app.py` (see Project Structure above)
+3. Make sure all required files are in the same folder as `app.py` (see Project Structure above)
 
 4. Run the app:
 ```bash
-streamlit run heat_app.py
+streamlit run app.py
 ```
 
 ---
